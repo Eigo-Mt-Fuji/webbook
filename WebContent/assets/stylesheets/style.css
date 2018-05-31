@@ -1,0 +1,48 @@
+.table {
+  font-size: 18px;
+}
+
+.content-footer {
+	position: fixed;
+	bottom: 0;
+    width: 100%;
+    height: 100px;
+}
+
+.content-header-title {
+
+	background-size:100% auto;
+	width: 100%;
+	height:80px;
+	font-size:30px;
+	background-repeat: no-repeat;
+	background-image: url("/webbook/assets/images/common/tittle2_4.png");
+}
+
+.content-header-systemtitle {
+
+	background-size:contain;
+	width: 640px;
+	height:50px;
+	font-size:30px;
+}
+.content-header-systemtitle>span{
+
+	display:block;
+}
+.content-header-title>span {
+
+	display:block;
+	margin-left:30px;
+	margin-top:20px;
+	padding-top:10px;
+}
+
+.content-header-menu {
+
+	background-size:contain;
+	width: 640px;
+	height:50px;
+	font-size:24px;
+	padding-left:10px;
+}

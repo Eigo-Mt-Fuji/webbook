@@ -27,6 +27,7 @@ public class MemberController extends HttpServlet {
 
 		String action = request.getParameter("action");
 
+		request.setAttribute("action", action);
 
 		// 検索条件入力画面を初期表示
 		if (action.equals("index")) {
@@ -47,7 +48,7 @@ public class MemberController extends HttpServlet {
 			MemberBean bean  = new MemberBean() ;
 			bean.setUserId(1);
 			bean.setUserPostal("999-9999");
-			bean.setUserRole("People");
+			bean.setUserEmail("localhost-1@localhost.com");
 			bean.setUserTel("0120-117-117");
 			bean.setUserAddress("Miyamasuzaka 1-1-1, Shibuya, Tokyo");
 			bean.setUserBirthday(new Date(System.currentTimeMillis()));
@@ -55,15 +56,26 @@ public class MemberController extends HttpServlet {
 			bean.setUserFamilyName("Fujikawa");
 			bean.setUserPassword("himitu");
 			list.add(bean);
+
+			bean  = new MemberBean() ;
+			bean.setUserId(2);
+			bean.setUserPostal("999-9999");
+			bean.setUserEmail("localhost-2@localhost.com");
+			bean.setUserTel("090-1111-1111");
+			bean.setUserAddress("Dogenzaka 1-1-1, Shibuya, Tokyo");
+			bean.setUserBirthday(new Date(System.currentTimeMillis()));
+			bean.setUserName("You");
+			bean.setUserFamilyName("Suzuki");
+			bean.setUserPassword("himitu");
+			list.add(bean);
 //			4.	システムは入力条件に該当する会員の一覧を表示する（S-1, E-3）
-			request.setAttribute("title", "会員検索結果");
+			request.setAttribute("system_title", "新宿図書館　書籍管理システム");
+			request.setAttribute("content_title", "会員検索結果");
 			request.setAttribute("list", list);
 
+			RequestDispatcher dp = request.getRequestDispatcher("/member/search.jsp");
+			dp.forward(request, response);
 		}
-
-
-
-
 //
 //		代替系列
 //
