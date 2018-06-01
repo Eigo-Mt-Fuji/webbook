@@ -14,12 +14,9 @@ import la.webbook.exception.DataAccessException;
  */
 public class DBManager {
 
-	private static final String DB_HOST = "localhost";
-	private static final int DB_PORT = 3306;
 	private static final String DB_NAME = "webbook";
 	private static final String DB_USER = "postgres";
 	private static final String DB_PASSWORD = "postgres";
-
 
 	public DBManager() {
 

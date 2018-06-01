@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author user
  *
  */
-public class BookInfo implements Serializable {
+public class BookInfoBean implements Serializable {
 
 	private String bookinfoIsbn ; //CHAR(13) PRIMARY KEY,
 	private String categoryCode;// CHAR(2) NOT NULL REFERENCES Category,
@@ -18,7 +18,7 @@ public class BookInfo implements Serializable {
 	private String bookinfoAuthor;// VARCHAR(20) NOT NULL
 
 
-	public BookInfo() {
+	public BookInfoBean() {
 	}
 	public String getBookinfoIsbn() {
 		return bookinfoIsbn;
