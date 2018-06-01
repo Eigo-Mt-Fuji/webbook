@@ -1,8 +1,9 @@
 package la.webbook.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,13 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.webbook.dao.DBManager;
+import la.webbook.dao.MemberDao;
 import la.webbook.entity.MemberBean;
+import la.webbook.exception.DataAccessException;
+import la.webbook.util.Constant;
 
 /**
  * Servlet implementation class MemberController
  */
 @WebServlet("/member")
 public class MemberController extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,70 +33,89 @@ public class MemberController extends HttpServlet {
 
 		String action = request.getParameter("action");
 
+		// システムは入力条件に該当する会員の一覧を表示する（S-1, E-3）
+		request.setAttribute("system_title", Constant.SYSTEM_TITLE);
 		request.setAttribute("action", action);
 
 		// 検索条件入力画面を初期表示
 		if (action.equals("index")) {
-			//		1.	メニューから「会員の検索」を選択すると、このユースケースが開始される（E-1, E-2)
-			//		2.	システムは会員の検索条件を入力する画面を表示する
-			request.setAttribute("title", "会員検索");
+
+			request.setAttribute("title", Constant.CONTENT_TITLE_MEMBER_SEARCH);
 			RequestDispatcher dp = request.getRequestDispatcher("/member/search.jsp");
 			dp.forward(request, response);
 		// 検索ボタン押下
 		}else if(action.equals("search")) {
 
+			search(request, response);
+		}
+	}
+
+	/**
+	 * 会員検索
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		List<MemberBean> list = null;
+
+		Connection connection = null;
+		try {
+
 			//	3.	アクターは会員を「ID」「名前」「住所」「電話番号」「メールアドレス」で絞り込むためのキーワード
 			String keyword = request.getParameter("keyword");
 			// 要注意会員で絞り込むかどうかを選択
-			boolean onlyNeedAttention = Boolean.parseBoolean(request.getParameter("onlyNeedAttention"));
+			String onlyNeedAttention = request.getParameter("onlyNeedAttention");
 
-			ArrayList<MemberBean> list = new ArrayList<MemberBean>();
-			MemberBean bean  = new MemberBean() ;
-			bean.setUserId(1);
-			bean.setUserPostal("999-9999");
-			bean.setUserEmail("localhost-1@localhost.com");
-			bean.setUserTel("0120-117-117");
-			bean.setUserAddress("Miyamasuzaka 1-1-1, Shibuya, Tokyo");
-			bean.setUserBirthday(new Date(System.currentTimeMillis()));
-			bean.setUserName("Eigo");
-			bean.setUserFamilyName("Fujikawa");
-			bean.setUserPassword("himitu");
-			list.add(bean);
+			connection = DBManager.getConnection();
+			MemberDao memberDao = new MemberDao(connection);
 
-			bean  = new MemberBean() ;
-			bean.setUserId(2);
-			bean.setUserPostal("999-9999");
-			bean.setUserEmail("localhost-2@localhost.com");
-			bean.setUserTel("090-1111-1111");
-			bean.setUserAddress("Dogenzaka 1-1-1, Shibuya, Tokyo");
-			bean.setUserBirthday(new Date(System.currentTimeMillis()));
-			bean.setUserName("You");
-			bean.setUserFamilyName("Suzuki");
-			bean.setUserPassword("himitu");
-			list.add(bean);
-//			4.	システムは入力条件に該当する会員の一覧を表示する（S-1, E-3）
-			request.setAttribute("system_title", "新宿図書館　書籍管理システム");
-			request.setAttribute("content_title", "会員検索結果");
-			request.setAttribute("list", list);
+			if ((keyword != null && !keyword.isEmpty()) || (onlyNeedAttention != null && !onlyNeedAttention.isEmpty())) {
+				boolean bOnlyNeedAttention = "true".equals(onlyNeedAttention) ? true : false;
+
+				list = memberDao.findBy(keyword, bOnlyNeedAttention);
+			}else {
+
+				list = memberDao.findAll();
+			}
+
+			// 検索結果が１件以上ある場合
+			if (!list.isEmpty()) {
+
+				request.setAttribute("action", "search");
+				request.setAttribute("content_title", Constant.CONTENT_TITLE_MEMBER_SEARCH_RESULT);
+				request.setAttribute("list", list);
+			// 入力条件に該当する会員がひとりもいなかった
+			}else {
+
+				// システムは該当するユーザが存在しない旨を伝えるメッセージとともに、検索条件入力画面を再表示する
+				request.setAttribute("action", "index");
+				request.setAttribute("content_title", Constant.CONTENT_TITLE_MEMBER_SEARCH);
+				request.setAttribute("message", "該当するユーザが存在しませんでした。");
+			}
 
 			RequestDispatcher dp = request.getRequestDispatcher("/member/search.jsp");
 			dp.forward(request, response);
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+			request.setAttribute("message", e.getMessage());
+
+			RequestDispatcher dp = request.getRequestDispatcher("/common/error.jsp");
+			dp.forward(request, response);
+		}finally {
+
+			if (connection != null) {
+
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-//
-//		代替系列
-//
-//		S-1：　入力条件がひとつも入力されていなかった
-//		1.	システムは、会員を全件検索し、一覧を表示する
-//
-//		例外系列
-//		E-1：　アクターがログインしていなかった
-//		2.	システムは、「ログインする」ユースケースを起動する
-//
-//		E-2：　アクターが図書館職員ではなく一般利用者としてログインしていた
-//		1.	システムは、その機能を利用する権限がない旨を伝える画面を表示する
-//
-//		E-3：　入力条件に該当する会員がひとりもいなかった
-//		1.	システムは該当するユーザが存在しない旨を伝えるメッセージとともに、検索条件入力画面を再表示する
 	}
 
 	/**
