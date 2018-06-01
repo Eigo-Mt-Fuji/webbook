@@ -33,7 +33,6 @@ public class MemberController extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		// システムは入力条件に該当する会員の一覧を表示する（S-1, E-3）
 		request.setAttribute("system_title", Constant.SYSTEM_TITLE);
 		request.setAttribute("action", action);
 

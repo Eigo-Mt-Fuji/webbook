@@ -11,10 +11,7 @@
 	  	<link rel="stylesheet" href="/webbook/assets/stylesheets/style.css" />
 		<title>system_title</title>
 	</head>
-	<%
-		request.setAttribute("system_title", la.webbook.util.Constant.SYSTEM_TITLE);
-		request.setAttribute("content_title", la.webbook.util.Constant.CONTENT_TITLE_LOGIN);
-	%>
+
 	<body>
 		<div class="container" style="height:600px">
 			<jsp:include page="/common/content-header.jsp" />
@@ -22,11 +19,11 @@
 				<input type="hidden" name="action" value="login" />
 				<div class="form-group">
 				    <label for="user_email">メールアドレス</label>
-				    <input type="email" class="form-control" id="user_email" placeholder="xxx@abc.com" />
+				    <input type="email" class="form-control" name="user_email" placeholder="xxx@abc.com" />
 				</div>
 				<div class="form-group">
 				    <label for="exampleInputPassword1">パスワード</label>
-				    <input type="password" class="form-control" id="user_password" placeholder="ヒント: himitu">
+				    <input type="password" class="form-control" name="user_password" placeholder="ヒント: himitu">
 				</div>
 				<button type="submit" class="btn btn-primary">ログイン</button>
 				<c:if test="${not empty message}">

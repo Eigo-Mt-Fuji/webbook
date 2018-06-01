@@ -47,11 +47,19 @@ public class SessionController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+		// セッションにログイン情報を設定
+		HttpSession session = request.getSession();
+
+		session.setAttribute("member", null);
+		request.setAttribute("system_title", la.webbook.util.Constant.SYSTEM_TITLE);
+		request.setAttribute("content_title", la.webbook.util.Constant.CONTENT_TITLE_LOGIN);
+
+		RequestDispatcher dp = request.getRequestDispatcher("/login.jsp");
+		dp.forward(request, response);
 	}
 
 	/**
-	 * 会員検索
+	 * ログイン
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -68,7 +76,6 @@ public class SessionController extends HttpServlet {
 			connection = DBManager.getConnection();
 			MemberDao memberDao = new MemberDao(connection);
 
-			//TODO: メールアドレス / パスワードチェック
 			MemberBean memberBean = memberDao.login(email, password);
 
 			if (memberBean != null) {
@@ -77,9 +84,7 @@ public class SessionController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", memberBean);
 
-				request.setAttribute("action", "index");
-				request.setAttribute("content_title", Constant.CONTENT_TITLE_TOP);
-				response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+				response.sendRedirect(this.getServletContext().getContextPath() + "/index");
 			}else {
 
 				// システムは該当するユーザが存在しない旨を伝えるメッセージとともに、検索条件入力画面を再表示する
@@ -117,7 +122,7 @@ public class SessionController extends HttpServlet {
 	}
 
 	/**
-	 * 会員検索
+	 * ログアウト
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -131,10 +136,7 @@ public class SessionController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 
-			// システムは該当するユーザが存在しない旨を伝えるメッセージとともに、検索条件入力画面を再表示する
-			request.setAttribute("content_title", Constant.CONTENT_TITLE_LOGIN);
-			RequestDispatcher dp = request.getRequestDispatcher("/login.jsp");
-			dp.forward(request, response);
+			response.sendRedirect(this.getServletContext().getContextPath() + "/session");
 		} catch (Exception e) {
 
 			e.printStackTrace();

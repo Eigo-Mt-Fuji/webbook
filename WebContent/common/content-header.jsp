@@ -10,23 +10,24 @@
 
 		if(confirm("ログアウトしますか？")) {
 
-			document,logoutForm.submit();
+			document.logoutForm.submit();
 		}
 	}
 </script>
 
 <!-- システムタイトル -->
 <div class="content-header-systemtitle">
-	<span style="display:block;">${system_title}</span>
-	<c:if test="${not empty member}">
-		<span>&nbsp;&nbsp;&nbsp;</span>
-		<span style="font-size:20px;">ようこそ${member.name}さん</span>
-		<span style="font-size:20px;"><a href="#" onclick="logout(); return false;">ログアウト</a></span>
-		<form name="logoutForm" action="/session" method="POST">
-			<input type="hidden" name="action" value="logout"/>
-		</form>
-	</c:if>
+	<span style="display:block;">
 
+		<span style="font-size:20px;display:inline;">${system_title}&nbsp;&nbsp;&nbsp;</span>
+		<c:if test="${not empty member}">
+			<span style="font-size:20px;display:inline;">ようこそ ${member.userFamilyName} ${member.userName}さん</span>
+			<span style="font-size:20px;display:inline;"><a href="#" onclick="logout(); return false;">ログアウト</a></span>
+			<form name="logoutForm" action="<%= request.getContextPath() %>/session" method="POST">
+				<input type="hidden" name="action" value="logout"/>
+			</form>
+		</c:if>
+	</span>
 </div>
 
 <c:if test="${not empty action}">
@@ -38,8 +39,10 @@
 </c:if>
 
 <hr/>
+<c:if test="${not empty content_title}">
 
-<!-- コンテンツタイトル -->
-<div class="content-header-title">
-	<span>${content_title}</span>
-</div>
+	<!-- コンテンツタイトル -->
+	<div class="content-header-title">
+		<span>${content_title}</span>
+	</div>
+</c:if>
