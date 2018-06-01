@@ -18,16 +18,20 @@
 	<body>
 		<div class="container" style="height:600px">
 			<jsp:include page="/common/content-header.jsp" />
-			<form action="/webbook/session?action=login" method="POST">
-			  <div class="form-group">
-			    <label for="user_email">メールアドレス</label>
-			    <input type="email" class="form-control" id="user_email" placeholder="xxx@abc,com" />
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">パスワード</label>
-			    <input type="password" class="form-control" id="user_password" placeholder="ヒント: himitu">
-			  </div>
-			  <button type="submit" class="btn btn-primary">ログイン</button>
+			<form action="/webbook/session" method="POST">
+				<input type="hidden" name="action" value="login" />
+				<div class="form-group">
+				    <label for="user_email">メールアドレス</label>
+				    <input type="email" class="form-control" id="user_email" placeholder="xxx@abc.com" />
+				</div>
+				<div class="form-group">
+				    <label for="exampleInputPassword1">パスワード</label>
+				    <input type="password" class="form-control" id="user_password" placeholder="ヒント: himitu">
+				</div>
+				<button type="submit" class="btn btn-primary">ログイン</button>
+				<c:if test="${not empty message}">
+					<p class="error-message">${message}</p>
+				</c:if>
 			</form>
 			<jsp:include page="/common/content-footer.jsp" />
 		</div>

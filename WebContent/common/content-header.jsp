@@ -1,9 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript">
+
+	/**
+	 * ログアウト処理
+	 */
+	function logout() {
+
+		if(confirm("ログアウトしますか？")) {
+
+			document,logoutForm.submit();
+		}
+	}
+</script>
+
 <!-- システムタイトル -->
 <div class="content-header-systemtitle">
 	<span style="display:block;">${system_title}</span>
+	<c:if test="${not empty member}">
+		<span>&nbsp;&nbsp;&nbsp;</span>
+		<span style="font-size:20px;">ようこそ${member.name}さん</span>
+		<span style="font-size:20px;"><a href="#" onclick="logout(); return false;">ログアウト</a></span>
+		<form name="logoutForm" action="/session" method="POST">
+			<input type="hidden" name="action" value="logout"/>
+		</form>
+	</c:if>
+
 </div>
 
 <c:if test="${not empty action}">

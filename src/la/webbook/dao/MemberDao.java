@@ -48,18 +48,65 @@ public class MemberDao extends AbstractDao {
 	 * @return
 	 * @throws DataAccessException
 	 */
+	public MemberBean login(String email, String password) throws DataAccessException {
+
+		Connection conn = this.getConnection();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		String sql = "select * from member where user_email = ? AND user_password = ?";
+		try {
+			MemberBean bean = null;
+
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, email);
+			statement.setString(2, password);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				bean = this.createBean(resultSet);
+				break;
+			}
+
+			return bean;
+		} catch (SQLException e) {
+
+			throw new DataAccessException("ログインエラー", e);
+		}finally {
+
+			try {
+				if(resultSet != null) {
+
+					resultSet.close();
+				}
+				if (statement != null) {
+
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * findAll
+	 * @return
+	 * @throws DataAccessException
+	 */
 	public List<MemberBean> findAll() throws DataAccessException {
 
 		List<MemberBean> list = new ArrayList<MemberBean>();
 
 		Connection conn = this.getConnection();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 
 		String sql = "select * from member order by user_id asc";
 		try {
 
-			PreparedStatement statement = conn.prepareStatement(sql);
+			statement = conn.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 
-			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				MemberBean bean = this.createBean(resultSet);
 				list.add(bean);
@@ -69,6 +116,20 @@ public class MemberDao extends AbstractDao {
 		} catch (SQLException e) {
 
 			throw new DataAccessException("会員情報検索エラー", e);
+		}finally {
+
+			try {
+				if(resultSet != null) {
+
+					resultSet.close();
+				}
+				if (statement != null) {
+
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -84,6 +145,8 @@ public class MemberDao extends AbstractDao {
 
 		Connection conn = this.getConnection();
 		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
 		try {
 
 			String whereClause = "";
@@ -115,7 +178,7 @@ public class MemberDao extends AbstractDao {
 				}
 			}
 
-			ResultSet resultSet = statement.executeQuery();
+			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				MemberBean bean = this.createBean(resultSet);
 				list.add(bean);
@@ -129,12 +192,17 @@ public class MemberDao extends AbstractDao {
 
 			try {
 
+				if(resultSet != null) {
+
+					resultSet.close();
+				}
 				if (statement != null) {
 
 					statement.close();
 				}
+
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
+
 				e.printStackTrace();
 			}
 		}
