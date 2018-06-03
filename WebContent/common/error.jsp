@@ -9,12 +9,12 @@
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	  	<link rel="stylesheet" href="/webbook/assets/stylesheets/style.css"/>
-		<title>新宿図書館 - 会員を検索する</title>
+		<TITLE>q</title>
 	</head>
 	<body>
 		<div class="container" style="height:600px">
 			<jsp:include page="/common/content-header.jsp" />
-			<c:if test="${not empty message"}">
+			<c:if test="${not empty message}">
 				<p>${message}</p>
 			</c:if>
 			<jsp:include page="/common/content-footer.jsp" />
