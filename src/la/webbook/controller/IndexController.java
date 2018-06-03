@@ -2,7 +2,6 @@ package la.webbook.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +15,13 @@ import la.webbook.util.Constant;
  * Servlet implementation class IndexController
  */
 @WebServlet("/index")
-public class IndexController extends ApplicationController {
+public class IndexController extends AbstractController {
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		this.doGet(req, resp);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,18 +29,19 @@ public class IndexController extends ApplicationController {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		MemberBean memberBean = (MemberBean)request.getSession().getAttribute(Constant.SESSION_ATTRIBUTE_MEMBER);
-		if ( memberBean != null && "1".equals(memberBean.getUserRole()) ) {
+		if (memberBean == null) {
 
-			response.sendRedirect(request.getContextPath() + "/member?action=search");
-		}else {
-
-			request.setAttribute("system_title", Constant.SYSTEM_TITLE);
-			request.setAttribute("action", "index");
-
-			RequestDispatcher dp = request.getRequestDispatcher("/index.jsp");
-			dp.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/session");
+			return ;
 		}
 
+		if ("1".equals(memberBean.getUserRole()) ) {
+
+			response.sendRedirect(request.getContextPath() + "/book?action=search");
+		}else {
+
+			response.sendRedirect(request.getContextPath() + "/member?action=search");
+		}
 	}
 
 }

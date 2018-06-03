@@ -1,7 +1,14 @@
+* {
+	font-size:20px;
+}
+
 .table {
   font-size: 18px;
 }
 
+.index-message {
+	color:#dddddd;
+}
 .content-footer {
 	position: fixed;
 	bottom: 0;
@@ -9,51 +16,98 @@
     height: 100px;
 }
 
+
+#items.table td, #items.table th {
+	padding: .1rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
+.content-header-system-title {
+
+	background-size:contain;
+	width: 100%;
+	height:50px;
+	font-size:30px;
+}
+.content-header-system-title>.area>.system-title{
+
+	font-size: 32px;
+}
+
 .content-header-title {
 
 	background-size: 100% 80%;
 	width: 100%;
 	height: 70px;
-	font-size: 30px;
 	background-repeat: no-repeat;
 	background-image: url("../../assets/images/common/tittle2_4.png");
-}
-
-#members.table td, #members.table th {
-	padding: .1rem;
-	vertical-align: top;
-	border-top: 1px solid #dee2e6;
-}
-.content-header-systemtitle {
-
-	background-size:contain;
-	width: 640px;
-	height:50px;
-	font-size:30px;
-}
-.content-header-systemtitle>span{
-
-	display:block;
 }
 .content-header-title>span {
 
 	display:block;
 	margin-left:40px;
-	margin-top:15px;
+	margin-top:20px;
 	padding-top:5px;
+	font-size: 30px;
 }
 
 .content-header-menu {
 
 	background-size:contain;
-	width: 640px;
-	height:50px;
-	font-size:24px;
+	width: 100%;
+	height: 50px;
 	padding-left:10px;
 }
 
 .error-message {
 
-	font-size: 20px;
 	color: #FF0000;
+}
+
+div.login-form-box {
+	text-align:left;
+	margin:0px auto;
+	width:300px;
+}
+div.contents {
+	text-align: center;
+	margin:0px auto;
+	width:100%;
+}
+div.login-form-title {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 30px;
+	padding-bottom: 20px;
+	width: 100%;
+	text-align:center;
+}
+div.login-form-box button {
+	width: 100%;
+	text-align: center;
+}
+.area>.item {
+	line-height: 40px;
+	text-align: center;
+}
+.area>.item-left {
+	margin: 0 0;
+}
+
+.area>.item-right {
+	right:0px;
+	text-align: right;
+}
+
+div.toolbar {
+	right: 0;
+	height: 40px;
+	margin-top: 0px;
+	padding-top:0px;
+	margin-bottom: 10px;
+}
+
+#items > tbody > tr > td button {
+	padding-top: 2px;
+	padding-bottom: 2px;
 }

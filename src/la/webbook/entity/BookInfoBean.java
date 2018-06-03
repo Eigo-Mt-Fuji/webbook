@@ -1,14 +1,8 @@
-/**
- *
- */
 package la.webbook.entity;
 
 import java.io.Serializable;
 
-/**
- * @author user
- *
- */
+
 public class BookInfoBean implements Serializable {
 
 	private String bookinfoIsbn ; //CHAR(13) PRIMARY KEY,
@@ -17,9 +11,17 @@ public class BookInfoBean implements Serializable {
 	private String bookinfoName;// VARCHAR(100) NOT NULL,
 	private String bookinfoAuthor;// VARCHAR(20) NOT NULL
 
-
 	public BookInfoBean() {
 	}
+
+	public BookInfoBean(String bookinfoIsbn, String categoryCode, String publisherCode, String bookinfoName, String bookinfoAuthor) {
+		this.bookinfoIsbn = bookinfoIsbn;
+		this.categoryCode = categoryCode;
+		this.publisherCode = publisherCode;
+		this.bookinfoName = bookinfoName;
+		this.bookinfoAuthor = bookinfoAuthor;
+	}
+
 	public String getBookinfoIsbn() {
 		return bookinfoIsbn;
 	}

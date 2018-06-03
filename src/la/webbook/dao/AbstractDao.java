@@ -1,7 +1,10 @@
 package la.webbook.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 
+import la.webbook.entity.BookInfoBean;
+import la.webbook.entity.MemberBean;
 import la.webbook.exception.DataAccessException;
 
 /**
@@ -23,4 +26,6 @@ public abstract class AbstractDao {
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 	}
+
+
 }

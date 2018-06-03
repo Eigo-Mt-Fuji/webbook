@@ -29,18 +29,6 @@ public class MemberBean implements Serializable {
 
 	}
 
-	/**
-	 *
-	 * @param userId
-	 * @param userFamilyName
-	 * @param userName
-	 * @param userPostal
-	 * @param userAddress
-	 * @param userEmail
-	 * @param userTel
-	 * @param userBirthday
-	 * @param userRole
-	 */
 	public MemberBean(int userId, String userFamilyName, String userName, String userPostal, String userAddress,
 			String userEmail, String userTel, Date userBirthday, String userRole) {
 		this.userId = userId;
@@ -52,6 +40,20 @@ public class MemberBean implements Serializable {
 		this.userTel = userTel;
 		this.userBirthday = userBirthday;
 		this.userRole = userRole;
+	}
+
+	public MemberBean(int userId, String userFamilyName, String userName, String userPostal, String userAddress,
+					  String userEmail, String userTel, Date userBirthday, String userRole, String userPassword) {
+		this.userId = userId;
+		this.userFamilyName = userFamilyName;
+		this.userName = userName;
+		this.userPostal = userPostal;
+		this.userAddress = userAddress;
+		this.userEmail = userEmail;
+		this.userTel = userTel;
+		this.userBirthday = userBirthday;
+		this.userRole = userRole;
+		this.userPassword = userPassword;
 	}
 
 
