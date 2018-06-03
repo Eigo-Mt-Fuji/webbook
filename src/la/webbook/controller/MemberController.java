@@ -22,7 +22,7 @@ import la.webbook.util.Constant;
  * Servlet implementation class MemberController
  */
 @WebServlet("/member")
-public class MemberController extends HttpServlet {
+public class MemberController extends ApplicationController {
 
 	private static final long serialVersionUID = 1L;
 

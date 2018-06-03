@@ -8,15 +8,15 @@
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	  	<link href="/webbook/assets/stylesheets/style.css" />
+	  	<link rel="stylesheet" href="/webbook/assets/stylesheets/style.css" />
 		<title>${system_title}</title>
 	</head>
 
 	<body>
-		<div class="container" style="height">
-			<jsp:include page="/common/content-header.jsp" />
+		<div class="container">
+			<jsp:include page="../common/content-header.jsp" />
 			<c:if test="${action eq \"search\"}">
-				<table class="table">
+				<table id="members" class="table">
 				    <thead>
 				      <tr>
 							<th>会員ID</th>
@@ -40,7 +40,7 @@
 				    </tbody>
 			  	</table>
 			</c:if>
-			<jsp:include page="/common/content-footer.jsp" />
+			<jsp:include page="../common/content-footer.jsp" />
 		</div>
 	</body>
 </html>

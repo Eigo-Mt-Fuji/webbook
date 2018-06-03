@@ -7,4 +7,6 @@ public final class Constant {
 	public static final String CONTENT_TITLE_MEMBER_SEARCH_RESULT = "会員検索結果";
 	public static final String CONTENT_TITLE_LOGIN = "ログイン";
 	public static final String CONTENT_TITLE_TOP = "ようこそ";
+	public static final String SESSION_ATTRIBUTE_MEMBER = "member";
+
 }

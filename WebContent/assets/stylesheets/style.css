@@ -11,14 +11,19 @@
 
 .content-header-title {
 
-	background-size:100% auto;
+	background-size: 100% 80%;
 	width: 100%;
-	height:80px;
-	font-size:30px;
+	height: 70px;
+	font-size: 30px;
 	background-repeat: no-repeat;
-	background-image: url("/webbook/assets/images/common/tittle2_4.png");
+	background-image: url("../../assets/images/common/tittle2_4.png");
 }
 
+#members.table td, #members.table th {
+	padding: .1rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
 .content-header-systemtitle {
 
 	background-size:contain;

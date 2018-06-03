@@ -22,7 +22,7 @@ import la.webbook.util.Constant;
  * Servlet implementation class SessionController
  */
 @WebServlet("/session")
-public class SessionController extends HttpServlet {
+public class SessionController extends ApplicationController {
 	private static final long serialVersionUID = 1L;
 
 	/**
